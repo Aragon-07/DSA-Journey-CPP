@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void manualSwap(int &a, int &b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int partition(vector<int> &arr, int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            manualSwap(arr[i], arr[j]);
+        }
+    }
+
+    int finalPivotIndex = i + 1;
+    manualSwap(arr[finalPivotIndex], arr[high]);
+
+    cout << "Pivot value " << pivot << " placed at final index: " << finalPivotIndex << endl;
+
+    return finalPivotIndex;
+}
+
+void quickSort(vector<int> &arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    int n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    vector<int> arr(n);
+    cout << "Enter " << n << " integers: ";
+    for (int i = 0; i < n; i++) cin >> arr[i];
+
+    cout << "\n--- Pivot Placement Trace ---" << endl;
+    quickSort(arr, 0, n - 1);
+
+    cout << "\nFinal Sorted Array: ";
+    for (int x : arr) cout << x << " ";
+    cout << endl;
+
+    return 0;
+}
